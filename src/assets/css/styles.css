@@ -1,0 +1,39 @@
+* {
+    color: white;
+}
+
+.custom-nav {
+    background-color: #373f46 !important;
+}
+
+.nav-item img {
+    margin: 10px;
+}
+
+.nav-item .nav-link {
+    text-transform: uppercase;
+    color: white;
+}
+
+div#app-container {
+    position: fixed;
+    top: 70px;
+    bottom: 70px;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    background-color: #1d2733;
+    overflow: auto;
+}
+
+footer#custom-footer {
+    height: 6rem;
+    background-color: #373f46;
+    font-size: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
