@@ -1,5 +1,7 @@
 <template>
-    <HelloWorld/>
+  <div id="custom-home">
+      <HelloWorld/>
+  </div>
 </template>
 
 <script>
@@ -9,6 +11,10 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  beforeCreate() {
+    fetch(this.$store.state.apiUrl + '/api/user')
+    .then(res => console.log(res))
   }
 }
 </script>

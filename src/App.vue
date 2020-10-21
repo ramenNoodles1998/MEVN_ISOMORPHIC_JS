@@ -20,6 +20,10 @@
     components: {
       NavBar,
       Footer
+    },
+
+    beforeCreate() {
+      this.$store.dispatch('authenticate')
     }
   }
 </script>
