@@ -1,6 +1,7 @@
 const User = require('../../model/user-model')
 const Task = require('../../model/task-model')
 const moment = require('moment')
+const auth = require('../../services/auth-services')
 
 exports.index = (req, res) => {
     //find all tasks
@@ -11,19 +12,18 @@ exports.index = (req, res) => {
 
         return res.status(200).json({tasks: tasks})
     }).populate('author', 'username', 'user')
-
-    return res.status(200).json()
 }
 
 exports.create = (req, res) => {
     //create task
-    const id = 10
+    const id = auth.getUserId(req)
+
     User.findOne({_id: id}, (error, user) => {
         if(error && !user) {
             return res.status(500).json()
         }
 
-        const task = new Task(req.body.task)
+        const task = new Task(req.body)
         task.author = user._id
         task.dueDate = moment(task.dueDate)
 
@@ -41,7 +41,7 @@ exports.create = (req, res) => {
 
 exports.update = (req, res) => {
     //for updating tasks
-    const id = 10
+    const id = auth.getUserId(req)
 
     User.findOne({_id: id}, (error, user) => {
         if(error) {
@@ -51,7 +51,7 @@ exports.update = (req, res) => {
             return res.status(404).json()
         }
 
-        const task = req.body.task
+        const task = new Task(req.body.task)
         task.author = user._id
         task.dueDate = moment(task.dueDate)
         Task.findByIdAndUpdate({_id: task._id}, (task, error) => {
@@ -66,7 +66,7 @@ exports.update = (req, res) => {
 
 exports.remove = (req, res) => {
     //removing task
-    const id = 5;
+    const id = auth.getUserId(req)
 
     Task.findOne({_id: req.params.id}, (error, task) => {
         if(error) {
@@ -89,6 +89,7 @@ exports.remove = (req, res) => {
 
 exports.show = (req, res) => {
     //get task by id
+    console.log(req.params.id)
     Task.findOne({_id: req.params.id}, (error, task) => {
         if(error) {
             return res.status(500).json()
@@ -97,6 +98,7 @@ exports.show = (req, res) => {
             return res.status(400).json()
         }
 
+        console.log(task)
         return res.status(200).json({task: task})
     })
 }

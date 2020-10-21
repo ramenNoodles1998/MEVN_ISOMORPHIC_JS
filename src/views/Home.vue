@@ -14,7 +14,6 @@ export default {
   },
   beforeCreate() {
     fetch(this.$store.state.apiUrl + '/api/user')
-    .then(res => console.log(res))
   }
 }
 </script>
